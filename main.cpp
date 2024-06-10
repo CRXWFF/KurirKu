@@ -392,8 +392,6 @@ void displayQueue(const queue<tuple<string, string, string>> &inputQueue)
     }
 }
 
-queue<tuple<string, string, string>> inputQueue;
-
 int main()
 {
     // fitur upi file express
@@ -406,6 +404,8 @@ int main()
     // 7. pengelolaan antrian pengiriman
     int pilihan;
     bool isLoggedIn = false;
+    queue<tuple<string, string, string>> inputQueue;
+    queue<tuple<string, string, string>> tempQueue;
     do
     {
         cout << border << "\n"
@@ -455,6 +455,8 @@ int main()
                     cout << borderKecil << endl;
                     // cin >> berkas;
                     root = masukkanBerkas(root, info.lokasi, info.tujuan, info.berkas);
+                    inputQueue.push(make_tuple(info.lokasi, info.tujuan, info.berkas));
+                    tempQueue.push(make_tuple(info.lokasi, info.tujuan, info.berkas));
                 }
 
                 cout << "Barang yang dikelompokkan berdasarkan kampus dan gedung:" << endl;
@@ -545,6 +547,8 @@ int main()
             }
         }
     } while (pilihan != 8);
+    cout << "\nTerimakasih telah menggunakan aplikasi kami :)\n\n"
+         << border;
 
     return 0;
 }
