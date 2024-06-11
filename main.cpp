@@ -9,6 +9,8 @@
 #include <limits.h>
 #include <cstring>
 #include <conio.h>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 string borderKecil = "------------------------------------------";
@@ -291,8 +293,7 @@ void estimasiWaktuSampai(const Graph &graph, const string &start, const string &
 }
 
 // Fitur nomer 5: Struktur untuk menyimpan informasi pengirim dan penerima
-struct info
-{
+struct info {
     string namaPengirim;
     string alamatPengirim;
     string kontakPengirim;
@@ -301,8 +302,28 @@ struct info
     string kontakPenerima;
     string nomorResi;
     string tglKirim;
-    double beratBarang;
+    float beratBarang;
+    float harga;    // Tambahkan harga
 };
+
+// Fungsi untuk meng-generate nomor resi random sebanyak 4 digit
+string generateNomorResi() {
+    srand(time(0)); // Menginisialisasi seed random dengan waktu sekarang
+    int resi = rand() % 9000 + 1000; // Meng-generate nomor random 4 digit
+    return to_string(resi);
+}
+
+// Fungsi untuk menyimpan nomor resi ke dalam file
+void simpanNomorResiKeFile(const string& nomorResi) {
+    ofstream file("resi.txt");
+    if (file.is_open()) {
+        file << nomorResi << endl;
+        file.close();
+        cout << border << endl;
+    } else {
+        cout << borderKecil << endl;
+    }
+}
 
 void resi()
 {
@@ -340,9 +361,12 @@ void resi()
     cout << "Nomor Handphone: ";
     getline(cin, informasi.kontakPenerima);
     cout << border << endl;
-    cout << "Masukkan nomor resi: ";
-    cin >> informasi.nomorResi;
+
+    cout<< "Masukkan harga ongkir: " << endl;
+    cin >> informasi.harga;
     cout << border << endl;
+    // Generate nomor resi random
+    informasi.nomorResi = generateNomorResi();
 
     // Input tgl kirim
     cout << "Masukkan tanggal pengiriman (dd/mm/yyyy): ";
@@ -367,6 +391,11 @@ void resi()
     cout << "\nNomor Resi: " << informasi.nomorResi << endl;
     cout << "Tanggal Pengiriman: " << informasi.tglKirim << endl;
     cout << "Berat Barang: " << informasi.beratBarang << " gram" << endl;
+    cout << "Harga: Rp." << informasi.harga << endl;
+
+
+    // Simpan nomor resi ke dalam file
+    simpanNomorResiKeFile(informasi.nomorResi);
 }
 
 // Fitur nomer 7
