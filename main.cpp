@@ -198,9 +198,9 @@ struct infoBarang
 
 struct TreeNode
 {
+    infoBarang info;
     string lokasi; // Add the 'lokasi' member
     string tujuan; // Add the 'tujuan' member
-    infoBarang info;
     queue<string> berkas;
     TreeNode *kiri;
     TreeNode *kanan;
@@ -353,17 +353,17 @@ void resi()
     cin >> informasi.beratBarang;
 
     // Menampilkan resi barang
-    cout << "\n=== Resi Barang ===" << endl;
-    cout << "Informasi Pengirim:" << endl;
+    cout << "\n============== Resi Barang ==============" << endl;
+    cout << "Informasi Pengirim" << endl;
     cout << "Nama Lengkap: " << informasi.namaPengirim << endl;
     cout << "Alamat: " << informasi.alamatPengirim << endl;
     cout << "Nomor Handphone: " << informasi.kontakPengirim << endl;
-
-    cout << "\nInformasi Penerima:" << endl;
+    cout << borderKecil << endl;
+    cout << "\nInformasi Penerima" << endl;
     cout << "Nama Lengkap: " << informasi.namaPenerima << endl;
     cout << "Alamat: " << informasi.alamatPenerima << endl;
     cout << "Nomor Handphone: " << informasi.kontakPenerima << endl;
-
+    cout << borderKecil << endl;
     cout << "\nNomor Resi: " << informasi.nomorResi << endl;
     cout << "Tanggal Pengiriman: " << informasi.tglKirim << endl;
     cout << "Berat Barang: " << informasi.beratBarang << " gram" << endl;
@@ -388,7 +388,7 @@ void displayQueue(const queue<tuple<string, string, string>> &inputQueue)
         cout << "Berkas: " << file << endl;
         cout << "Tujuan: " << destination << endl;
         cout << "Lokasi: " << location << endl;
-        cout << "----------------" << endl;
+        cout << borderKecil << endl;
     }
 }
 
@@ -510,7 +510,7 @@ int main()
                 cin >> start;
                 cout << "Masukkan tempat tujuan: ";
                 cin >> end;
-                cout << "Masukkan kecepatan rata-rata dalam km/jam: ";
+                cout << "Masukkan batas aturan kecepatan rata-rata di jalan dalam km/jam: ";
                 cin >> kecepatanRataRata;
 
                 estimasiWaktuSampai(graph, start, end, kecepatanRataRata);
@@ -538,7 +538,8 @@ int main()
             if (isLoggedIn)
             {
                 cout << border << endl;
-                cout << "\nDaftar Antrian Berkas: " << endl;
+                cout << "\nDaftar Antrian Berkas: \n"
+                     << endl;
                 displayQueue(inputQueue); // menampilkan seluruh antrian
             }
             else
