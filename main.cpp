@@ -199,13 +199,13 @@ struct infoBarang
 struct TreeNode
 {
     infoBarang info;
-    string lokasi; // Add the 'lokasi' member
-    string tujuan; // Add the 'tujuan' member
+    string lokasi;
+    string tujuan;
     queue<string> berkas;
     TreeNode *kiri;
     TreeNode *kanan;
 
-    // Constructor to initialize the infoBarang part of TreeNode
+    // inisialisasi info barang ke node tree
     TreeNode(string loc, string dest, string berk) : lokasi(loc), tujuan(dest), info{loc, dest, berk}, kiri(nullptr), kanan(nullptr) {}
     TreeNode(string loc, string dest) : lokasi(loc), tujuan(dest), info{loc, dest, ""}, kiri(nullptr), kanan(nullptr) {}
 };
