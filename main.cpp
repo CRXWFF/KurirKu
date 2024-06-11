@@ -11,6 +11,7 @@
 #include <conio.h>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 using namespace std;
 string borderKecil = "------------------------------------------";
@@ -377,21 +378,18 @@ void resi()
     cin >> informasi.beratBarang;
 
     // Menampilkan resi barang
-    cout << "\n============== Resi Barang ==============" << endl;
-    cout << "Informasi Pengirim" << endl;
-    cout << "Nama Lengkap: " << informasi.namaPengirim << endl;
-    cout << "Alamat: " << informasi.alamatPengirim << endl;
-    cout << "Nomor Handphone: " << informasi.kontakPengirim << endl;
-    cout << borderKecil << endl;
-    cout << "\nInformasi Penerima" << endl;
-    cout << "Nama Lengkap: " << informasi.namaPenerima << endl;
-    cout << "Alamat: " << informasi.alamatPenerima << endl;
-    cout << "Nomor Handphone: " << informasi.kontakPenerima << endl;
-    cout << borderKecil << endl;
-    cout << "\nNomor Resi: " << informasi.nomorResi << endl;
-    cout << "Tanggal Pengiriman: " << informasi.tglKirim << endl;
-    cout << "Berat Barang: " << informasi.beratBarang << " gram" << endl;
-    cout << "Harga: Rp." << informasi.harga << endl;
+     cout << "\n=== Resi Barang ===" << endl;
+
+    cout << "| " << left << setw(20) << "Pengirim" << "| " << left << setw(20) << informasi.namaPengirim << " |" << endl;
+    cout << "| " << left << setw(20) << "Alamat Pengirim" << "| " << left << setw(20) << informasi.alamatPengirim << " |" << endl;
+    cout << "| " << left << setw(20) << "No. HP Pengirim" << "| " << left << setw(20) << informasi.kontakPengirim << " |" << endl;
+    cout << "| " << left << setw(20) << "Penerima" << "| " << left << setw(20) << informasi.namaPenerima << " |" << endl;
+    cout << "| " << left << setw(20) << "Alamat Penerima" << "| " << left << setw(20) << informasi.alamatPenerima << " |" << endl;
+    cout << "| " << left << setw(20) << "No. HP Penerima" << "| " << left << setw(20) << informasi.kontakPenerima << " |" << endl;
+    cout << "| " << left << setw(20) << "No. Resi" << "| " << left << setw(20) << informasi.nomorResi << " |" << endl;
+    cout << "| " << left << setw(20) << "Harga" << "| " << left << setw(20) << informasi.harga << " |" << endl;
+    cout << "| " << left << setw(20) << "Tanggal" << "| " << left << setw(20) << informasi.tglKirim << " |" << endl;
+    
 
 
     // Simpan nomor resi ke dalam file
