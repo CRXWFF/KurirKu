@@ -197,6 +197,7 @@ struct infoBarang
     string lokasi;
     string tujuan;
     string berkas;
+    string date;
 };
 
 struct TreeNode
@@ -397,25 +398,23 @@ void resi()
 }
 
 // Fitur nomer 7
-void displayQueue(const queue<tuple<string, string, string>> &inputQueue)
-{
-    if (inputQueue.empty())
-    {
+void displayQueue(const queue<tuple<string, string, string, string>>& inputQueue) {
+    if (inputQueue.empty()) {
         cout << "Tidak Terdapat Antrian Berkas" << endl;
         return;
-    }
+        }
 
-    queue<tuple<string, string, string>> tempQueue(inputQueue);
+cout << "| No |   Nama Berkas   |   Tujuan   |   Lokasi   |   Tanggal Pengiriman   |" << endl;
 
-    while (!tempQueue.empty())
-    {
-        string location, destination, file;
-        tie(location, destination, file) = tempQueue.front();
+    queue<tuple<string, string, string, string>> tempQueue(inputQueue);
+    int queueSize = 1;
+    
+    while (!tempQueue.empty()) {
+        string location, destination, file, date;
+        tie(location, destination, file, date) = tempQueue.front(); 
         tempQueue.pop();
-        cout << "Berkas: " << file << endl;
-        cout << "Tujuan: " << destination << endl;
-        cout << "Lokasi: " << location << endl;
-        cout << borderKecil << endl;
+        cout <<"| " << queueSize++ << " | " << file << " | " <<  destination << " | " << location << " | " << date << " | " << endl;
+    
     }
 }
 
@@ -431,8 +430,9 @@ int main()
     // 7. pengelolaan antrian pengiriman
     int pilihan;
     bool isLoggedIn = false;
-    queue<tuple<string, string, string>> inputQueue;
-    queue<tuple<string, string, string>> tempQueue;
+    queue<tuple<string, string, string, string>> inputQueue;
+    int queueSize = 0;
+
     do
     {
         cout << border << "\n"
@@ -462,9 +462,11 @@ int main()
             {
                 infoBarang info;
                 TreeNode *root = nullptr;
+                queue<tuple<string, string, string, string>> tempQueue;
                 int jumlahBarang;
                 cout << "Masukkan jumlah barang: ";
                 cin >> jumlahBarang;
+                jumlahBarang == queueSize;
 
                 for (int i = 0; i < jumlahBarang; ++i)
                 {
@@ -482,8 +484,8 @@ int main()
                     cout << borderKecil << endl;
                     // cin >> berkas;
                     root = masukkanBerkas(root, info.lokasi, info.tujuan, info.berkas);
-                    inputQueue.push(make_tuple(info.lokasi, info.tujuan, info.berkas));
-                    tempQueue.push(make_tuple(info.lokasi, info.tujuan, info.berkas));
+                    inputQueue.push(make_tuple(info.lokasi, info.tujuan, info.berkas, info.date));
+                    tempQueue.push(make_tuple(info.lokasi, info.tujuan, info.berkas, info.date));
                 }
 
                 cout << "Barang yang dikelompokkan berdasarkan kampus dan gedung:" << endl;
