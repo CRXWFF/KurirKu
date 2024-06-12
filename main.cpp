@@ -259,17 +259,17 @@ void inorderTraversal(TreeNode *root)
 }
 
 // Fitur nomer 3: Fungsi untuk menghitung lokasi barang berdasarkan waktu dan kecepatan
-void hitungLokasiBarang(double jam, double kilometer)
+void hitungLokasiBarang(const string &namaBarang, double jam, double kilometer)
 {
     double jarakTempuh = kilometer;
 
     if (kilometer <= jarakTempuh)
     {
-        cout << "Barang saat ini sudah mencapai tujuan." << endl;
+        cout << "Barang \"" << namaBarang << "\" saat ini sudah mencapai tujuan." << endl;
     }
     else
     {
-        cout << "Barang masih dalam perjalanan.\n";
+        cout << namaBarang << " masih dalam perjalanan.\n";
         // cout << "Perkiraan kilometer yang sudah ditempuh: " << jarakTempuh << " km\n";
         // cout << "Total kilometer yang harus ditempuh: " << kilometer << " km\n";
     }
@@ -295,8 +295,10 @@ void estimasiWaktuSampai(const Graph &graph, const string &start, const string &
 }
 
 // Fitur nomer 5: Struktur untuk menyimpan informasi pengirim dan penerima
-struct info {
+struct info
+{
     string namaPengirim;
+    string namaBarang;
     string alamatPengirim;
     string kontakPengirim;
     string namaPenerima;
@@ -305,25 +307,31 @@ struct info {
     string nomorResi;
     string tglKirim;
     float beratBarang;
-    float harga;    // Tambahkan harga
+    float harga; // Tambahkan harga
 };
 
 // Fungsi untuk meng-generate nomor resi random sebanyak 4 digit
-string generateNomorResi() {
-    srand(time(0)); // Menginisialisasi seed random dengan waktu sekarang
+string generateNomorResi()
+{
+    srand(time(0));                  // Menginisialisasi seed random dengan waktu sekarang
     int resi = rand() % 9000 + 1000; // Meng-generate nomor random 4 digit
     return to_string(resi);
 }
 
 // Fungsi untuk menyimpan nomor resi ke dalam file
-void simpanNomorResiKeFile(const string& nomorResi) {
-    ofstream file("resi.txt");
-    if (file.is_open()) {
-        file << nomorResi << endl;
+void simpanResiKeFile(const string &nomorResi, const string &namaBarang)
+{
+    ofstream file("resi.txt", ios::app); // Membuka file dalam mode append
+    if (file.is_open())
+    {
+        file << nomorResi << "," << namaBarang << endl; // Menulis nomor resi dan nama barang ke file
         file.close();
         cout << border << endl;
-    } else {
+    }
+    else
+    {
         cout << borderKecil << endl;
+        cout << "Gagal membuka file resi.txt" << endl;
     }
 }
 
@@ -335,6 +343,10 @@ void resi()
     cout << endl;
     cout << "Masukkan informasi pengirim" << endl;
     cout << endl;
+    cout << border << endl;
+    cout << "Masukkan nama barang: ";
+    cin.ignore();
+    getline(cin, informasi.namaBarang);
     cout << border << endl;
     cout << "Nama Lengkap: ";
     cin.ignore();
@@ -364,9 +376,10 @@ void resi()
     getline(cin, informasi.kontakPenerima);
     cout << border << endl;
 
-    /*cout<< "Masukkan harga ongkir: " << endl;
+    cout << "Masukkan harga ongkir: " << endl;
     cin >> informasi.harga;
-    cout << border << endl;*/
+    cout << border << endl;
+
     // Generate nomor resi random
     informasi.nomorResi = generateNomorResi();
 
@@ -379,8 +392,8 @@ void resi()
     cin >> informasi.beratBarang;
 
     // Menampilkan resi barang
-     cout << "\n============= Resi Barang =============" << endl;
-
+    cout << "\n=== Resi Barang ===" << endl;
+    cout << "| " << left << setw(20) << "Nama Barang" << "| " << left << setw(20) << informasi.namaBarang << " |" << endl;
     cout << "| " << left << setw(20) << "Pengirim" << "| " << left << setw(20) << informasi.namaPengirim << " |" << endl;
     cout << "| " << left << setw(20) << "Alamat Pengirim" << "| " << left << setw(20) << informasi.alamatPengirim << " |" << endl;
     cout << "| " << left << setw(20) << "No. HP Pengirim" << "| " << left << setw(20) << informasi.kontakPengirim << " |" << endl;
@@ -388,33 +401,33 @@ void resi()
     cout << "| " << left << setw(20) << "Alamat Penerima" << "| " << left << setw(20) << informasi.alamatPenerima << " |" << endl;
     cout << "| " << left << setw(20) << "No. HP Penerima" << "| " << left << setw(20) << informasi.kontakPenerima << " |" << endl;
     cout << "| " << left << setw(20) << "No. Resi" << "| " << left << setw(20) << informasi.nomorResi << " |" << endl;
-    //cout << "| " << left << setw(20) << "Harga" << "| " << left << setw(20) << informasi.harga << " |" << endl;
+    cout << "| " << left << setw(20) << "Harga" << "| " << left << setw(20) << informasi.harga << " |" << endl;
     cout << "| " << left << setw(20) << "Tanggal" << "| " << left << setw(20) << informasi.tglKirim << " |" << endl;
-    
-
 
     // Simpan nomor resi ke dalam file
-    simpanNomorResiKeFile(informasi.nomorResi);
+    simpanResiKeFile(informasi.nomorResi, informasi.namaBarang);
 }
 
 // Fitur nomer 7
-void displayQueue(const queue<tuple<string, string, string, string>>& inputQueue) {
-    if (inputQueue.empty()) {
+void displayQueue(const queue<tuple<string, string, string, string>> &inputQueue)
+{
+    if (inputQueue.empty())
+    {
         cout << "Tidak Terdapat Antrian Berkas" << endl;
         return;
-        }
+    }
 
-cout << "| No |   Nama Berkas   |   Tujuan   |   Lokasi   |   Tanggal Pengiriman   |" << endl;
+    cout << "| No |   Nama Berkas   |   Tujuan   |   Lokasi   |   Tanggal Pengiriman   |" << endl;
 
     queue<tuple<string, string, string, string>> tempQueue(inputQueue);
     int queueSize = 1;
-    
-    while (!tempQueue.empty()) {
+
+    while (!tempQueue.empty())
+    {
         string location, destination, file, date;
-        tie(location, destination, file, date) = tempQueue.front(); 
+        tie(location, destination, file, date) = tempQueue.front();
         tempQueue.pop();
-        cout <<"| " << queueSize++ << " | " << file << " | " <<  destination << " | " << location << " | " << date << " | " << endl;
-    
+        cout << "| " << queueSize++ << " | " << file << " | " << destination << " | " << location << " | " << date << " | " << endl;
     }
 }
 
@@ -501,25 +514,75 @@ int main()
             cout << border << endl;
             if (isLoggedIn)
             {
-                double jam, kilometer, kecepatanRataRata;
-                cout << "Perkiraan waktu tempuh dalam jam: ";
-                cin >> jam;
-                cout << "Masukkan jarak tempuh dalam kilometer: ";
-                cin >> kilometer;
+                string nomorResiAtauNamaBarang;
+                cout << "Masukkan Nomor Resi atau Nama Barang: ";
+                cin >> nomorResiAtauNamaBarang;
 
-                hitungLokasiBarang(jam, kilometer);
+                ifstream file("resi.txt");
+                if (file.is_open())
+                {
+                    bool found = false;
+                    string line;
+                    string namaBarang; // Deklarasikan namaBarang di luar loop
+                    while (getline(file, line))
+                    {
+                        size_t pos = line.find(',');
+                        if (pos != string::npos)
+                        {
+                            string resi = line.substr(0, pos);
+                            namaBarang = line.substr(pos + 1);
+
+                            if (resi == nomorResiAtauNamaBarang || namaBarang == nomorResiAtauNamaBarang)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    file.close();
+
+                    if (found)
+                    {
+                        double jam, kilometer;
+                        cout << "Perkiraan waktu tempuh dalam jam: ";
+                        cin >> jam;
+                        cout << "Masukkan jarak tempuh dalam kilometer: ";
+                        cin >> kilometer;
+
+                        hitungLokasiBarang(namaBarang, jam, kilometer); // namaBarang sekarang dapat diakses
+                    }
+                    else
+                    {
+                        cout << "Nomor Resi atau Nama Barang tidak ditemukan" << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Gagal membuka file resi.txt" << endl;
+                }
             }
             else
             {
                 cout << "Anda harus login terlebih dahulu" << endl;
             }
         }
+
         else if (pilihan == 5)
         {
             cout << border << endl;
             if (isLoggedIn)
             {
                 Graph graph;
+                string start, end;
+                double kecepatanRataRata;
+
+                cout << "Masukkan tempat awal: ";
+                cin >> start;
+                cout << "Masukkan tempat tujuan: ";
+                cin >> end;
+                cout << "Masukkan batas aturan kecepatan rata-rata di jalan dalam km/jam: ";
+                cin >> kecepatanRataRata;
+
                 int numEdges;
                 cout << "Masukkan jumlah edge: ";
                 cin >> numEdges;
@@ -532,15 +595,6 @@ int main()
                     cin >> u >> v >> weight;
                     addEdge(graph, u, v, weight);
                 }
-
-                string start, end;
-                double kecepatanRataRata;
-                cout << "Masukkan tempat awal: ";
-                cin >> start;
-                cout << "Masukkan tempat tujuan: ";
-                cin >> end;
-                cout << "Masukkan batas aturan kecepatan rata-rata di jalan dalam km/jam: ";
-                cin >> kecepatanRataRata;
 
                 estimasiWaktuSampai(graph, start, end, kecepatanRataRata);
             }
