@@ -335,11 +335,6 @@ void simpanResiKeFile(const string &nomorResi, const string &namaBarang)
     }
 }
 
-// Fungsi untuk mencetak garis pemisah
-void printSeparator() {
-    cout << "+------------+-------------------+-------------------+-------------------+--------------------------+-----------------------+-------------+" << endl;
-}
-
 void resi()
 {
     info informasi;
@@ -398,27 +393,16 @@ void resi()
 
     // Menampilkan resi barang
     cout << "\n=== Resi Barang ===" << endl;
-    printSeparator();
-    cout << "| " << setw(10) << left << "No Resi"
-         << " | " << setw(17) << left << "Tanggal Dikirim"
-         << " | " << setw(17) << left << "Nama Pengirim"
-         << " | " << setw(26) << left << "Alamat Pengirim"
-         << " | " << setw(17) << left << "Nama Penerima"
-         << " | " << setw(26) << left << "Alamat Penerima"
-         << " | " << setw(21) << left << "No Handphone Penerima"
-         << " | " << setw(11) << left << "Berat (g)"
-         << " |" << endl;
-    printSeparator();
-    cout << "| " << setw(10) << left << informasi.nomorResi
-         << " | " << setw(17) << left << informasi.tglKirim
-         << " | " << setw(17) << left << informasi.namaPengirim
-         << " | " << setw(26) << left << informasi.alamatPengirim
-         << " | " << setw(17) << left << informasi.namaPenerima
-         << " | " << setw(26) << left << informasi.alamatPenerima
-         << " | " << setw(21) << left << informasi.kontakPenerima
-         << " | " << setw(11) << left << informasi.beratBarang
-         << " |" << endl;
-    printSeparator();
+    cout << "| " << left << setw(20) << "Nama Barang" << "| " << left << setw(20) << informasi.namaBarang << " |" << endl;
+    cout << "| " << left << setw(20) << "Pengirim" << "| " << left << setw(20) << informasi.namaPengirim << " |" << endl;
+    cout << "| " << left << setw(20) << "Alamat Pengirim" << "| " << left << setw(20) << informasi.alamatPengirim << " |" << endl;
+    cout << "| " << left << setw(20) << "No. HP Pengirim" << "| " << left << setw(20) << informasi.kontakPengirim << " |" << endl;
+    cout << "| " << left << setw(20) << "Penerima" << "| " << left << setw(20) << informasi.namaPenerima << " |" << endl;
+    cout << "| " << left << setw(20) << "Alamat Penerima" << "| " << left << setw(20) << informasi.alamatPenerima << " |" << endl;
+    cout << "| " << left << setw(20) << "No. HP Penerima" << "| " << left << setw(20) << informasi.kontakPenerima << " |" << endl;
+    cout << "| " << left << setw(20) << "No. Resi" << "| " << left << setw(20) << informasi.nomorResi << " |" << endl;
+    cout << "| " << left << setw(20) << "Harga" << "| " << left << setw(20) << informasi.harga << " |" << endl;
+    cout << "| " << left << setw(20) << "Tanggal" << "| " << left << setw(20) << informasi.tglKirim << " |" << endl;
 
     // Simpan nomor resi ke dalam file
     simpanResiKeFile(informasi.nomorResi, informasi.namaBarang);
@@ -433,7 +417,7 @@ void displayQueue(const queue<tuple<string, string, string, string>> &inputQueue
         return;
     }
 
-    cout << "| No |   Nama Berkas   |   Tujuan   |   Lokasi   |   Tanggal Pengiriman   |" << endl;
+    cout << "| No |   Nama Berkas   |   Tujuan   |   Lokasi   |" << endl;
 
     queue<tuple<string, string, string, string>> tempQueue(inputQueue);
     int queueSize = 1;
@@ -443,7 +427,7 @@ void displayQueue(const queue<tuple<string, string, string, string>> &inputQueue
         string location, destination, file, date;
         tie(location, destination, file, date) = tempQueue.front();
         tempQueue.pop();
-        cout << "| " << queueSize++ << " | " << file << " | " << destination << " | " << location << " | " << date << " | " << endl;
+        cout << "| " << queueSize++ << " | " << file << " | " << destination << " | " << location << " | " << endl;
     }
 }
 
